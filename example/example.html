@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Lib Json Stream Example</title>
+<script src="../bower_components/lib_util/build/libUtil.min.js"></script>
+<script src="../build/libJsonStream.min.js"></script>
+</head>
+
+<h1>Lib Json Stream Example</h1>
+Json to Write:<br/>
+<div id="srcJson"></div>
+<br/>
+Encoded byte length:<br/>
+<div id="encodedByteLen"></div><br/>
+Json Restored:<br/>
+<div id="restoreJson"></div>
+
+<script>
+	var json = {
+			property1: "value 1",
+			property2: 1234,
+			property3: [1,2,3,4,5]
+	}
+	
+	srcJson.innerHTML = JSON.stringify(json)
+	
+	var output = new org.chox.json.OutputStream()
+	var buf = output.write( json )
+	
+	encodedByteLen.innerHTML = buf.byteLength
+	
+	var input = new org.chox.json.InputStream()
+	var inputJson = input.read( buf )
+	
+	restoreJson.innerHTML = JSON.stringify(inputJson)
+
+</script>
+
+</html>

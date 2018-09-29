@@ -1,0 +1,24 @@
+{
+  "name": "lib_json_stream",
+  "description": "Generated with typescript.java",
+  "main": "build/libJsonStream.min.js",
+  "authors": [
+    "ANMC"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "json",
+    "compression"
+  ],
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "lib_util": "https://github.com/lamylanmc/lib_util.git"
+  }
+}

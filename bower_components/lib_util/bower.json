@@ -1,0 +1,18 @@
+{
+  "name": "lib_util",
+  "version": "0.0.1",
+  "authors": [
+    "ANMC"
+  ],
+  "description": "",
+  "main": "build/libUtil.js",
+  "license": "MIT",
+  "homepage": "",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}
