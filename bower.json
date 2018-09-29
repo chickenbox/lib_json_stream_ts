@@ -1,5 +1,6 @@
 {
   "name": "lib_json_stream",
+  "version": "1.0.0",
   "description": "Compress a stream of json object in to arraybuffers.",
   "main": "build/libJsonStream.min.js",
   "authors": [
