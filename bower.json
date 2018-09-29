@@ -1,6 +1,6 @@
 {
   "name": "lib_json_stream",
-  "description": "Generated with typescript.java",
+  "description": "Compress a stream of json object in to arraybuffers.",
   "main": "build/libJsonStream.min.js",
   "authors": [
     "ANMC"

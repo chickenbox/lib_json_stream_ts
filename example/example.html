@@ -8,11 +8,17 @@
 <h1>Lib Json Stream Example</h1>
 Json to Write:<br/>
 <div id="srcJson"></div>
+Second json to Write:<br/>
+<div id="srcJson2"></div>
 <br/>
 Encoded byte length:<br/>
 <div id="encodedByteLen"></div><br/>
+Second time encoded byte length:<br/>
+<div id="encodedByteLen2"></div><br/>
 Json Restored:<br/>
 <div id="restoreJson"></div>
+Second json Restored:<br/>
+<div id="restoreJson2"></div>
 
 <script>
 	var json = {
@@ -20,18 +26,28 @@ Json Restored:<br/>
 			property2: 1234,
 			property3: [1,2,3,4,5]
 	}
+	var json2 = {
+			property1: "value 2",
+			property2: 5678,
+			property3: [6,7,8,9,10]
+	}
 	
 	srcJson.innerHTML = JSON.stringify(json)
+	srcJson2.innerHTML = JSON.stringify(json2)
 	
 	var output = new org.chox.json.OutputStream()
 	var buf = output.write( json )
+	var buf2 = output.write( json2 )
 	
 	encodedByteLen.innerHTML = buf.byteLength
+	encodedByteLen2.innerHTML = buf2.byteLength
 	
 	var input = new org.chox.json.InputStream()
 	var inputJson = input.read( buf )
+	var inputJson2 = input.read( buf2 )
 	
 	restoreJson.innerHTML = JSON.stringify(inputJson)
+	restoreJson2.innerHTML = JSON.stringify(inputJson2)
 
 </script>
 
