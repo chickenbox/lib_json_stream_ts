@@ -20,6 +20,6 @@
     "tests"
   ],
   "dependencies": {
-    "lib_util": "https://github.com/lamylanmc/lib_util.git"
+    "lib_util_ts": "https://github.com/lamylanmc/lib_util_ts.git"
   }
 }

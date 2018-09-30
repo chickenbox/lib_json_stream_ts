@@ -1,5 +1,5 @@
 namespace org {
-    export namespace chox {
+    export namespace chickenbox {
         export namespace json {
 
             enum DataType {
@@ -18,7 +18,7 @@ namespace org {
             export class InputStream {
                 private propertyNames: string[] = []
 
-                private _read( reader: util.BufferReader ): any {
+                private _read( reader: chickenbox.buffer.Reader ): any {
                     switch ( reader.uint8 ) {
                         case DataType.byte:
                             return reader.int8
@@ -57,7 +57,7 @@ namespace org {
                 }
 
                 read( buffer: ArrayBuffer ) {
-                    const reader = new util.BufferReader( buffer )
+                    const reader = new chickenbox.buffer.Reader( buffer )
                     const numKey: number = reader.int16
                     for ( var i = 0; i < numKey; i++ )
                         this.propertyNames.push( reader.tinyString )

@@ -1,8 +1,8 @@
 "use strict";
 var org;
 (function (org) {
-    let chox;
-    (function (chox) {
+    let chickenbox;
+    (function (chickenbox) {
         let json;
         (function (json_1) {
             let DataType;
@@ -60,7 +60,7 @@ var org;
                     }
                 }
                 read(buffer) {
-                    const reader = new chox.util.BufferReader(buffer);
+                    const reader = new chickenbox.buffer.Reader(buffer);
                     const numKey = reader.int16;
                     for (var i = 0; i < numKey; i++)
                         this.propertyNames.push(reader.tinyString);
@@ -72,8 +72,8 @@ var org;
                 constructor() {
                     this.propertyNames = [];
                     this.propertyIndexLookup = new Map();
-                    this.writer = new chox.util.BufferedWriter();
-                    this.headerWriter = new chox.util.BufferedWriter();
+                    this.writer = new org.chox.util.BufferedWriter();
+                    this.headerWriter = new org.chox.util.BufferedWriter();
                 }
                 index(key) {
                     if (!this.propertyIndexLookup.has(key)) {
@@ -166,6 +166,6 @@ var org;
                 }
             }
             json_1.OutputStream = OutputStream;
-        })(json = chox.json || (chox.json = {}));
-    })(chox = org.chox || (org.chox = {}));
+        })(json = chickenbox.json || (chickenbox.json = {}));
+    })(chickenbox = org.chickenbox || (org.chickenbox = {}));
 })(org || (org = {}));

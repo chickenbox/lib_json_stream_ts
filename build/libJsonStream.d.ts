@@ -1,5 +1,5 @@
 declare namespace org {
-    namespace chox {
+    namespace chickenbox {
         namespace json {
             class InputStream {
                 private propertyNames;

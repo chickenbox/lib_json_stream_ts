@@ -1,0 +1,26 @@
+{
+  "name": "lib_util",
+  "authors": [
+    "ANMC"
+  ],
+  "description": "",
+  "main": "build/libUtil.js",
+  "license": "MIT",
+  "homepage": "https://github.com/lamylanmc/lib_util_ts",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "_release": "bbfc1995de",
+  "_resolution": {
+    "type": "branch",
+    "branch": "master",
+    "commit": "bbfc1995deeabeba2237d8031d0f8fca8af3c295"
+  },
+  "_source": "https://github.com/lamylanmc/lib_util_ts.git",
+  "_target": "*",
+  "_originalSource": "https://github.com/lamylanmc/lib_util_ts.git"
+}
