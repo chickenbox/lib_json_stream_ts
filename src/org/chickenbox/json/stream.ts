@@ -17,8 +17,15 @@ namespace org {
 
             export class InputStream {
                 private propertyNames: string[] = []
+            
+                public constructor(
+                        private readonly reader: chickenbox.buffer.Reader
+                        ){
+                    
+                }
 
-                private _read( reader: chickenbox.buffer.Reader ): any {
+                private _read(): any {
+                    const reader = this.reader
                     switch ( reader.uint8 ) {
                         case DataType.byte:
                             return reader.int8
@@ -35,10 +42,10 @@ namespace org {
                         case DataType.string:
                             return reader.string
                         case DataType.array: {
-                            const len = this._read( reader )
+                            const len = this._read()
                             var a = []
                             for ( var i = 0; i < len; i++ ) {
-                                a.push( this._read( reader ) )
+                                a.push( this._read() )
                             }
                             return a
                         }
@@ -46,22 +53,21 @@ namespace org {
                             return null
                         default: {
                             var obj: any = {}
-                            const len: number = this._read( reader )
+                            const len: number = this._read()
                             for ( var i = 0; i < len; i++ ) {
-                                const key = this.propertyNames[this._read( reader )]
-                                obj[key] = this._read( reader )
+                                const key = this.propertyNames[this._read()]
+                                obj[key] = this._read()
                             }
                             return obj
                         }
                     }
                 }
 
-                read( buffer: ArrayBuffer ) {
-                    const reader = new chickenbox.buffer.Reader( buffer )
-                    const numKey: number = reader.int16
+                read() {
+                    const numKey: number = this.reader.int16
                     for ( var i = 0; i < numKey; i++ )
-                        this.propertyNames.push( reader.tinyString )
-                    return this._read( reader )
+                        this.propertyNames.push( this.reader.tinyString )
+                    return this._read()
                 }
             }
 
@@ -70,7 +76,10 @@ namespace org {
                 private propertyIndexLookup = new Map<string, number>()
 
                 private writer = new chickenbox.buffer.Writer()
-                private headerWriter = new chickenbox.buffer.Writer()
+            
+                constructor(
+                        private readonly output: chickenbox.buffer.Writer
+                        ){}
 
                 private index( key: string ): number {
                     if ( !this.propertyIndexLookup.has( key ) ) {
@@ -147,17 +156,14 @@ namespace org {
                 write( json: any ) {
                     const startIndex = this.propertyNames.length
                     this.writer.reset()
-                    this.headerWriter.reset()
                     this._write( json )
 
-                    this.headerWriter.writeInt16( this.propertyNames.length - startIndex )
+                    this.output.writeInt16( this.propertyNames.length - startIndex )
                     for ( var i = startIndex; i < this.propertyNames.length; i++ ) {
-                        this.headerWriter.writeTinyString( this.propertyNames[i] )
+                        this.output.writeTinyString( this.propertyNames[i] )
                     }
 
-                    this.headerWriter.writeBytes( new Uint8Array( this.writer.buffer, 0, this.writer.length ), false )
-
-                    return this.headerWriter.buffer.slice( 0, this.headerWriter.length )
+                    this.output.writeBytes( new Uint8Array( this.writer.buffer, 0, this.writer.length ), false )
                 }
             }
         }

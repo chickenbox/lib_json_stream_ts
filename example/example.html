@@ -39,16 +39,17 @@ Measure Encode large json:<br/>
 	srcJson.innerHTML = JSON.stringify(json)
 	srcJson2.innerHTML = JSON.stringify(json2)
 	
-	var output = new org.chickenbox.json.OutputStream()
-	var buf = output.write( json )
-	var buf2 = output.write( json2 )
+	var outWriter = new org.chickenbox.buffer.Writer()
+	var output = new org.chickenbox.json.OutputStream(outWriter)
+	output.write( json )
+	var len1 = outWriter.length
+	encodedByteLen.innerHTML = len1
+	output.write( json2 )
+	encodedByteLen2.innerHTML = outWriter.length-len1
 	
-	encodedByteLen.innerHTML = buf.byteLength
-	encodedByteLen2.innerHTML = buf2.byteLength
-	
-	var input = new org.chickenbox.json.InputStream()
-	var inputJson = input.read( buf )
-	var inputJson2 = input.read( buf2 )
+	var input = new org.chickenbox.json.InputStream(new org.chickenbox.buffer.Reader(outWriter.buffer))
+	var inputJson = input.read()
+	var inputJson2 = input.read()
 	
 	restoreJson.innerHTML = JSON.stringify(inputJson)
 	restoreJson2.innerHTML = JSON.stringify(inputJson2)
@@ -61,17 +62,17 @@ Measure Encode large json:<br/>
 	var jsonAvgLen = 0
 	
 	// measure output stream
+	outWriter.reset()
 	startTime = performance.now()
 	for( var i=0; i<sampleCount; i++ ){
-		var buffer = output.write( largeJson )
-		streamAvgLen += buffer.byteLength
+		output.write( largeJson )
 	}
 	endTime = performance.now()
 	var outputStreamPerf = endTime-startTime
-	streamAvgLen /= sampleCount
+	streamAvgLen = outWriter.length/sampleCount
 
 	// measure input stream
-	var buffer = output.write( largeJson )
+	input = new org.chickenbox.json.InputStream(new org.chickenbox.buffer.Reader(outWriter.buffer))
 	startTime = performance.now()
 	for( var i=0; i<sampleCount; i++ ){
 		var json = input.read( buffer )

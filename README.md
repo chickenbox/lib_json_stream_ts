@@ -43,12 +43,14 @@ var json = {
 }
 
 // convert json to arraybuffer
-var output = new org.chickenbox.json.OutputStream()
-var buf = output.write( json )
+var outWriter = new org.chickenbox.buffer.Writer()
+var output = new org.chickenbox.json.OutputStream(outWriter)
+output.write( json )
 
-// convert arraybuffer to json 
-var input = new org.chickenbox.json.InputStream()
-var inJson = input.read( buf )
+// convert arraybuffer to json
+var inReader = new org.chickenbox.buffer.Reader(outWriter.buffer) 
+var input = new org.chickenbox.json.InputStream(inReader)
+var inJson = input.read()
 	
 ```
 
@@ -66,6 +68,8 @@ build.bat
 
 ## Release History
 
+* 1.0.2
+    * Update classes
 * 0.0.2
     * Work in progress
 
