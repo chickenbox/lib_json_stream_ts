@@ -75,6 +75,56 @@ var org;
     let chickenbox;
     (function (chickenbox) {
         let buffer;
+        (function (buffer_2) {
+            class Util {
+                static readFrom(url, completion) {
+                    const xhr = new XMLHttpRequest();
+                    xhr.open("GET", url, true);
+                    xhr.responseType = "arraybuffer";
+                    xhr.onreadystatechange = () => {
+                        switch (xhr.readyState) {
+                            case 4:
+                                switch (xhr.status) {
+                                    case 200:
+                                        var lastModified;
+                                        const s = xhr.getResponseHeader("Last-Modified");
+                                        if (s)
+                                            lastModified = new Date(Date.parse(s));
+                                        completion(xhr.response, lastModified);
+                                        break;
+                                    default:
+                                        completion();
+                                        break;
+                                }
+                                break;
+                        }
+                    };
+                    xhr.onerror = () => {
+                        completion();
+                    };
+                    xhr.onload = () => {
+                        switch (xhr.status) {
+                            case 404:
+                                completion();
+                        }
+                    };
+                    xhr.send();
+                }
+            }
+            buffer_2.Util = Util;
+        })(buffer = chickenbox.buffer || (chickenbox.buffer = {}));
+    })(chickenbox = org.chickenbox || (org.chickenbox = {}));
+})(org || (org = {}));
+Object.defineProperty(ArrayBuffer, "chickenbox", {
+    get: function () {
+        return org.chickenbox.buffer.Util;
+    }
+});
+var org;
+(function (org) {
+    let chickenbox;
+    (function (chickenbox) {
+        let buffer;
         (function (buffer) {
             class Writer {
                 constructor(initialBufferSize = 1, stringEncoding = "utf-8") {

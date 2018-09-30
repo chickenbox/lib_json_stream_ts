@@ -72,8 +72,8 @@ var org;
                 constructor() {
                     this.propertyNames = [];
                     this.propertyIndexLookup = new Map();
-                    this.writer = new org.chox.util.BufferedWriter();
-                    this.headerWriter = new org.chox.util.BufferedWriter();
+                    this.writer = new chickenbox.buffer.Writer();
+                    this.headerWriter = new chickenbox.buffer.Writer();
                 }
                 index(key) {
                     if (!this.propertyIndexLookup.has(key)) {

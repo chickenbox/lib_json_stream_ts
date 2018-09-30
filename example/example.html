@@ -1,8 +1,9 @@
 <html>
 <head>
 <title>Lib Json Stream Example</title>
-<script src="../bower_components/lib_util/build/libUtil.min.js"></script>
+<script src="../bower_components/lib_util_ts/build/libUtil.min.js"></script>
 <script src="../build/libJsonStream.min.js"></script>
+<script src="data/sample1.js"></script>
 </head>
 
 <h1>Lib Json Stream Example</h1>
@@ -19,6 +20,9 @@ Json Restored:<br/>
 <div id="restoreJson"></div>
 Second json Restored:<br/>
 <div id="restoreJson2"></div>
+<br/>
+Measure Encode large json:<br/>
+<div id="encodeLargeJsonResult1"></div>
 
 <script>
 	var json = {
@@ -35,20 +39,71 @@ Second json Restored:<br/>
 	srcJson.innerHTML = JSON.stringify(json)
 	srcJson2.innerHTML = JSON.stringify(json2)
 	
-	var output = new org.chox.json.OutputStream()
+	var output = new org.chickenbox.json.OutputStream()
 	var buf = output.write( json )
 	var buf2 = output.write( json2 )
 	
 	encodedByteLen.innerHTML = buf.byteLength
 	encodedByteLen2.innerHTML = buf2.byteLength
 	
-	var input = new org.chox.json.InputStream()
+	var input = new org.chickenbox.json.InputStream()
 	var inputJson = input.read( buf )
 	var inputJson2 = input.read( buf2 )
 	
 	restoreJson.innerHTML = JSON.stringify(inputJson)
 	restoreJson2.innerHTML = JSON.stringify(inputJson2)
 
+	// test large json
+	var sampleCount = 100
+	var startTime
+	var endTime
+	var streamAvgLen = 0
+	var jsonAvgLen = 0
+	
+	// measure output stream
+	startTime = performance.now()
+	for( var i=0; i<sampleCount; i++ ){
+		var buffer = output.write( largeJson )
+		streamAvgLen += buffer.byteLength
+	}
+	endTime = performance.now()
+	var outputStreamPerf = endTime-startTime
+	streamAvgLen /= sampleCount
+
+	// measure input stream
+	var buffer = output.write( largeJson )
+	startTime = performance.now()
+	for( var i=0; i<sampleCount; i++ ){
+		var json = input.read( buffer )
+	}
+	endTime = performance.now()
+	var inputStreamPerf = endTime-startTime
+
+	// measure JSON
+	var textEncoder = new TextEncoder("utf-8")
+	startTime = performance.now()
+	for( var i=0; i<sampleCount; i++ ){
+		var s = JSON.stringify( largeJson )
+		var buffer = textEncoder.encode(s)
+		jsonAvgLen += buffer.byteLength 
+		
+	}
+	endTime = performance.now()
+	var jsonPerf = endTime-startTime
+	jsonAvgLen /= sampleCount 
+
+	var s = JSON.stringify( largeJson )
+	var buffer = textEncoder.encode(s)
+	var textDecoder = new TextDecoder("utf-8")
+	startTime = performance.now()
+	for( var i=0; i<sampleCount; i++ ){
+		var s = textDecoder.decode(buffer)
+		var json = JSON.parse(s) 		
+	}
+	endTime = performance.now()
+	var jsonParsePerf = endTime-startTime
+
+	encodeLargeJsonResult1.innerHTML = "Output Stream: "+outputStreamPerf+"ms<br/>JSON.stringify: "+jsonPerf+"ms<br/>Input Stream: "+inputStreamPerf+"ms<br/>JSON.parse: "+jsonParsePerf+"ms<br/>Json Stream avg Len: "+streamAvgLen/1024+"KB(s)<br/>JSON avg Len: "+jsonAvgLen/1024+"KB(s)"
 </script>
 
 </html>

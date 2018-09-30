@@ -14,11 +14,11 @@
     "test",
     "tests"
   ],
-  "_release": "bbfc1995de",
+  "_release": "d096db1e9f",
   "_resolution": {
     "type": "branch",
     "branch": "master",
-    "commit": "bbfc1995deeabeba2237d8031d0f8fca8af3c295"
+    "commit": "d096db1e9f85c5798f320acb67e80f468152a4e6"
   },
   "_source": "https://github.com/lamylanmc/lib_util_ts.git",
   "_target": "*",

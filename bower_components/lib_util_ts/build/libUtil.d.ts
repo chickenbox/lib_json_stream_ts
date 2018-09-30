@@ -24,6 +24,15 @@ declare namespace org {
 declare namespace org {
     namespace chickenbox {
         namespace buffer {
+            class Util {
+                static readFrom(url: string, completion: (buffer?: ArrayBuffer, lastModified?: Date) => void): void;
+            }
+        }
+    }
+}
+declare namespace org {
+    namespace chickenbox {
+        namespace buffer {
             class Writer {
                 private _buffer;
                 private dataView;

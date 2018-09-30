@@ -69,8 +69,8 @@ namespace org {
                 private propertyNames: string[] = []
                 private propertyIndexLookup = new Map<string, number>()
 
-                private writer = new chox.util.BufferedWriter()
-                private headerWriter = new chox.util.BufferedWriter()
+                private writer = new chickenbox.buffer.Writer()
+                private headerWriter = new chickenbox.buffer.Writer()
 
                 private index( key: string ): number {
                     if ( !this.propertyIndexLookup.has( key ) ) {
