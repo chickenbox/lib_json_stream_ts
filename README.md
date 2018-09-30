@@ -36,6 +36,22 @@ Import script in html file:
 <script src="../bower_components/lib_util_ts/build/libJsonStream.min.js"></script>
 ```
 
+```sh
+var json = {
+	var1: "val1",
+	var2: "val2",
+}
+
+// convert json to arraybuffer
+var output = new org.chickenbox.json.OutputStream()
+var buf = output.write( json )
+
+// convert arraybuffer to json 
+var input = new org.chickenbox.json.InputStream()
+var inJson = input.read( buf )
+	
+```
+
 
 ## Development setup
 
